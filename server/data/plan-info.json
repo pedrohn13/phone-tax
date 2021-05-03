@@ -1,0 +1,3 @@
+{
+    "plans" : [{"name": "Fale Mais 30", "tolerance": 30}, {"name": "Fale Mais 60", "tolerance": 60}, {"name": "Fale Mais 120", "tolerance": 120}]
+}

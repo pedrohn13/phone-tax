@@ -1,1 +1,7 @@
-<p>tax-calculator works!</p>
+<div class="desktop-container" *ngIf="!isMobileResolution; else mobileContainer">
+  <app-tax-calculator-desktop></app-tax-calculator-desktop>
+</div>
+  
+<ng-template #mobileContainer>
+  <app-tax-calculator-mobile></app-tax-calculator-mobile>
+</ng-template>

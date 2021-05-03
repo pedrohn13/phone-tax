@@ -1,0 +1,9 @@
+{
+    "taxes" : [
+        { "code" : "011", "destinations": [ {"code": "016", "tax": 1.9}, {"code": "017", "tax": 1.7}, {"code": "018", "tax": 0.9} ] },
+        { "code" : "016", "destinations": [ {"code": "011", "tax": 2.9} ] },
+        { "code" : "017", "destinations": [ {"code": "011", "tax": 2.7} ] },
+        { "code" : "018", "destinations": [ {"code": "011", "tax": 1.9} ] }        
+    ],
+    "surplusPenalty": 0.1
+}
