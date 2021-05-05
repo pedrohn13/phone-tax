@@ -1,2 +1,44 @@
-<h1>Calculo de Tarifação</h1>
-<button mat-raised-button color="primary">Calcular</button>
+<mat-card style="margin:auto; width: 35%;">
+    <form [formGroup]="calculation" fxLayout="column" fxLayoutAlign="start center" (ngSubmit)="calculate()">
+        <h2>Calculo de Tarifação</h2>
+        <h4>Selecione o Plano</h4>
+        <mat-form-field appearance="fill">
+            <mat-label>Plano</mat-label>
+            <mat-select [formControl]="selectedPlan" name="plan">
+                <mat-option *ngFor="let plan of plans" [value]="plan.name">
+                    {{plan.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Selecione o DDD de Origem</h4>
+        <mat-form-field appearance="fill">
+            <mat-label>DDD Origem</mat-label>
+            <mat-select [formControl]="codeOrigin" name="codeOrigin">
+                <mat-option *ngFor="let tax of taxes" [value]="tax.code">
+                    {{tax.code}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Selecione o DDD de Destino</h4>
+        <mat-form-field appearance="fill">
+            <mat-label>DDD Destino</mat-label>
+            <mat-select [formControl]="codeDestination" name="codeDestination">
+                <mat-option *ngFor="let tax of taxes" [value]="tax.code">
+                    {{tax.code}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Selecione a Duração da Chamada</h4>
+        <mat-form-field appearance="fill">
+            <mat-label>Duração da Chamada</mat-label>
+            <input matInput type="number" placeholder="Ex. 25" min="0" [formControl]="callDuration">
+            <span matSuffix>min</span>
+            <mat-error *ngIf="callDuration.invalid">Preencha a duração</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" style="margin-top: 10px;">Calcular</button>
+    </form>
+</mat-card>

@@ -12,7 +12,7 @@ function getTaxByDestinationCode(originCode, destinationCode) {
     const destinations = getTaxByCode(originCode).destinations;
     
     if (!destinations) {
-        return '';
+        return destinations;
     }
     
     return destinations.find(d => { return d.code === destinationCode });

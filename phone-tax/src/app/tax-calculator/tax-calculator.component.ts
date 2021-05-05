@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationStateService } from '../shared/service/application-state/application-state.service';
-import { TaxCalculatorService } from '../shared/service/tax-calculator/tax-calculator.service';
+import { PlanService } from '../shared/service/plan/plan.service';
+import { TaxCalculatorService } from '../shared/service/tax/tax-calculator.service';
+import { TaxService } from '../shared/service/tax/tax.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tax-calculator',
@@ -9,25 +12,84 @@ import { TaxCalculatorService } from '../shared/service/tax-calculator/tax-calcu
 })
 export class TaxCalculatorComponent implements OnInit {
 
+  public calculation: FormGroup;
+
   public isMobileResolution: boolean;
+  public plans: any[];
+  public taxes: any[];
+
+  public selectedPlan: FormControl;
+  public callDuration: FormControl;
+  public codeOrigin: FormControl;
+  public codeDestination: FormControl;
 
   constructor(
+    private fb: FormBuilder,
     private applicationStateService: ApplicationStateService,
-    private calculateTaxService: TaxCalculatorService) {
+    private calculateTaxService: TaxCalculatorService,
+    private planService: PlanService,
+    private taxService: TaxService) {
+
+    this.createFormGroup(fb);
+
+
+
     this.isMobileResolution = this.applicationStateService.getIsMobileResolution();
-    this.calculate();
+    this.loadTaxes();
+    this.loadPlans();
   }
 
   ngOnInit(): void {
   }
 
+  createFormGroup(fb: FormBuilder) {
+    this.selectedPlan = new FormControl('', Validators.required);
+    this.callDuration = new FormControl('', [Validators.min(0), Validators.required]);
+    this.codeOrigin = new FormControl('', Validators.required);
+    this.codeDestination = new FormControl('', Validators.required);
+
+    this.calculation = fb.group({
+      selectedPlan: this.selectedPlan,
+      callDuration: this.callDuration,
+      codeOrigin: this.codeOrigin,
+      codeDestination: this.codeDestination
+    });
+  }
+
   calculate(): void {
-    this.calculateTaxService.calculateTax({originCode: "011", destinationCode: "017", callDuration: 80, plan: "Fale Mais 60"})
-    .subscribe(
-       data => console.log(data),
-       error => console.log(error),
-       () => console.log("acesso a webapi get ok...")
-    );
+    if (this.calculation.valid) {
+      const calculationRequest = this.generateCalculationRequest();
+      this.calculateTaxService.calculateTax(calculationRequest)
+        .subscribe(
+          data => console.log(data),
+          error => console.log(error)
+        );
+    }
+  }
+
+  loadTaxes() {
+    this.taxService.getTaxes()
+      .subscribe(
+        data => this.taxes = data,
+        error => console.log(error)
+      );
+  }
+
+  loadPlans() {
+    this.planService.getPlans()
+      .subscribe(
+        data => this.plans = data,
+        error => console.log(error)
+      );
+  }
+
+  private generateCalculationRequest() {
+    return {
+      originCode: this.codeOrigin.value,
+      destinationCode: this.codeDestination.value,
+      callDuration: this.callDuration.value,
+      plan: this.selectedPlan.value
+    };
   }
 
 }

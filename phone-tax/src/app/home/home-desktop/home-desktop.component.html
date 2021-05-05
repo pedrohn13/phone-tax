@@ -1,0 +1,30 @@
+<mat-card style="margin:auto; width: 50%;">
+    <h2>Conheça nossos planos</h2>
+    <div fxLayout="row">
+        <div fxFlex="35">
+            <mat-card>
+                <mat-selection-list #plansList [multiple]="false"
+                    (selectionChange)="onSelection($event, plansList.selectedOptions.selected[0]?.value)">
+                    <mat-list-option *ngFor="let plan of plans" [value]="plan" [selected]="plan == selectedPlan">
+                        {{plan.name}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </mat-card>
+        </div>
+        <div fxFlex *ngIf="selectedPlan" style="padding: 5px 10px;" fxLayout="column" fxLayoutAlign="center center">
+            <div>
+                <p>
+                    Com o plano {{selectedPlan.name}}, você fala a vontade sem nenhum custo por até
+                    {{selectedPlan.tolerance}} minutos por ligação.
+                </p>
+                <p>(*) Caso a ligação exceda o limite do plano, você pagará um adicional de 10% na tarifa padrão da
+                    ligação sem
+                    o plano.</p>
+                <p>Use nossa calculadora para simular tarifas de ligações.</p>
+            </div>
+            <div>
+                <button mat-raised-button (click)="onClickCalculate()">Calcular</button>
+            </div>
+        </div>
+    </div>
+</mat-card>

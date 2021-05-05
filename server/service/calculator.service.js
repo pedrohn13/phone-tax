@@ -17,7 +17,10 @@ function calculateWithPlan(calculationRequest) {
         return 0;
     }
 
-    const taxDestination = getTaxByDestinationCode(calculationRequest.originCode, calculationRequest.destinationCode);    
+    const taxDestination = getTaxByDestinationCode(calculationRequest.originCode, calculationRequest.destinationCode);   
+    if (!taxDestination) {
+        return '-';
+    }    
     const surplusTime = calculationRequest.callDuration - plan.tolerance;  
     const totalTax = surplusTime * taxDestination.tax;
 
@@ -25,7 +28,10 @@ function calculateWithPlan(calculationRequest) {
 }
 
 function calculateWithoutPlan(calculationRequest) {
-    const taxDestination = getTaxByDestinationCode(calculationRequest.originCode, calculationRequest.destinationCode);       
+    const taxDestination = getTaxByDestinationCode(calculationRequest.originCode, calculationRequest.destinationCode);   
+    if (!taxDestination) {
+        return '-';
+    }    
     return calculationRequest.callDuration * taxDestination.tax;
 }
 
