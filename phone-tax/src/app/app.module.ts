@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { TaxCalculatorComponent } from './tax-calculator/tax-calculator.component';
 import { TaxCalculatorDesktopComponent } from './tax-calculator/tax-calculator-desktop/tax-calculator-desktop.component';
 import { TaxCalculatorMobileComponent } from './tax-calculator/tax-calculator-mobile/tax-calculator-mobile.component';
-import { TaxCalculatorService } from './service/tax-calculator/tax-calculator.service';
+import { TaxCalculatorService } from './shared/service/tax-calculator/tax-calculator.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';

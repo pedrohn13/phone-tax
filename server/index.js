@@ -13,8 +13,12 @@ app.use(express.json());
 
 app.listen(PORT, () => console.log(`Express server currently running on port ${PORT}`));
 
-app.get('/', (request, response) => {
+app.get('/taxes', (request, response) => {
     response.send({id:22});
+});
+
+app.get('/plans', (request, response) => {
+  response.send({id:22});
 });
 
 app.post("/calculate-tax", function(req, res) {
@@ -31,3 +35,4 @@ app.post("/calculate-tax", function(req, res) {
   res.send(result);
   
 })
+

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationStateService } from '../service/application-state/application-state.service';
-import { TaxCalculatorService } from '../service/tax-calculator/tax-calculator.service';
+import { ApplicationStateService } from '../shared/service/application-state/application-state.service';
+import { TaxCalculatorService } from '../shared/service/tax-calculator/tax-calculator.service';
 
 @Component({
   selector: 'app-tax-calculator',
@@ -22,7 +22,7 @@ export class TaxCalculatorComponent implements OnInit {
   }
 
   calculate(): void {
-    this.calculateTaxService.calculateTax({originCode: "018", destinationCode: "017", callDuration: 100, plan: "Fale Mais 30"})
+    this.calculateTaxService.calculateTax({originCode: "011", destinationCode: "017", callDuration: 80, plan: "Fale Mais 60"})
     .subscribe(
        data => console.log(data),
        error => console.log(error),
