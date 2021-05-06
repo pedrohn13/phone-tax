@@ -1,6 +1,7 @@
 const planData = require('./../data/plan-info.json');
-var taxData = require('./../data/tax-info.json');
+const taxData = require('./../data/tax-info.json');
 const taxService = require('./taxes.service')
+const planService = require('./plans.service')
 
 function calculateTax(calculationRequest) {
 
@@ -10,17 +11,18 @@ function calculateTax(calculationRequest) {
     return generateResponse(valueWithPlan, valueWithoutPlan, calculationRequest);
 }
 
-function calculateWithPlan(calculationRequest) {    
-    const plan = planData.plans.find(p => { return p.name === calculationRequest.plan });
-
-    if (plan.tolerance >= calculationRequest.callDuration) {
-        return 0;
-    }
-
+function calculateWithPlan(calculationRequest) {
     const taxDestination = getTaxByDestinationCode(calculationRequest.originCode, calculationRequest.destinationCode);   
     if (!taxDestination) {
         return '-';
-    }    
+    } 
+
+    const plan = planService.getPlanByName(calculationRequest.plan);
+
+    if (plan.tolerance >= calculationRequest.callDuration) {
+        return 0;
+    }   
+       
     const surplusTime = calculationRequest.callDuration - plan.tolerance;  
     const totalTax = surplusTime * taxDestination.tax;
 

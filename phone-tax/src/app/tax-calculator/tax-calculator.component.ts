@@ -4,6 +4,8 @@ import { PlanService } from '../shared/service/plan/plan.service';
 import { TaxCalculatorService } from '../shared/service/tax/tax-calculator.service';
 import { TaxService } from '../shared/service/tax/tax.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CalculationResultDialogComponent } from '../dialog/calculation-result-dialog/calculation-result-dialog.component';
 
 @Component({
   selector: 'app-tax-calculator',
@@ -25,6 +27,7 @@ export class TaxCalculatorComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    public dialog: MatDialog,
     private applicationStateService: ApplicationStateService,
     private calculateTaxService: TaxCalculatorService,
     private planService: PlanService,
@@ -61,7 +64,7 @@ export class TaxCalculatorComponent implements OnInit {
       const calculationRequest = this.generateCalculationRequest();
       this.calculateTaxService.calculateTax(calculationRequest)
         .subscribe(
-          data => console.log(data),
+          data => this.openDialog(data),
           error => console.log(error)
         );
     }
@@ -90,6 +93,13 @@ export class TaxCalculatorComponent implements OnInit {
       callDuration: this.callDuration.value,
       plan: this.selectedPlan.value
     };
+  }
+
+  private openDialog(calculationResult): void {
+    const dialogRef = this.dialog.open(CalculationResultDialogComponent, {
+      width: '450px',
+      data: calculationResult
+    });    
   }
 
 }

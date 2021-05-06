@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ApplicationStateService } from 'src/app/shared/service/application-state/application-state.service';
 import { PlanService } from 'src/app/shared/service/plan/plan.service';
 import { TaxCalculatorService } from 'src/app/shared/service/tax/tax-calculator.service';
@@ -15,12 +16,13 @@ export class TaxCalculatorDesktopComponent extends TaxCalculatorComponent implem
 
   constructor(
     fb: FormBuilder,
+    dialog: MatDialog,
     applicationStateService: ApplicationStateService,
     calculateTaxService: TaxCalculatorService,
     planService: PlanService,
     taxService: TaxService
   ) {
-    super(fb, applicationStateService, calculateTaxService, planService, taxService);
+    super(fb, dialog, applicationStateService, calculateTaxService, planService, taxService);
    }
 
   ngOnInit(): void {

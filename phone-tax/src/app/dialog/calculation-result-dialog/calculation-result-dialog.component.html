@@ -1,0 +1,39 @@
+<div>
+    <h3>Calculo da Tarifa</h3>
+
+    <div class="field">
+        <label>Plano Escolhido:</label>
+        <span>{{result.calculationRequest.plan}}</span>
+    </div>  
+
+    <div class="field">
+        <label>Código de Origem:</label>
+        <span>{{result.calculationRequest.originCode}}</span>
+    </div> 
+
+    <div class="field">
+        <label>Código de Destino:</label>
+        <span>{{result.calculationRequest.destinationCode}}</span>
+    </div> 
+
+    <div class="field">
+        <label>Duração da Chamada:</label>
+        <span>{{result.calculationRequest.callDuration}} min</span>
+    </div> 
+
+    <div *ngIf="hasTax">
+        <div class="field">
+            <label>Preço COM FaleMais:</label>
+            <span style="color: darkblue; font-weight: 600;">{{result.valueWithPlan | currency : 'R$' }}</span>
+        </div> 
+    
+        <div class="field">
+            <label>Preço SEM FaleMais:</label>
+            <span style="color: darkred; font-weight: 600;">{{result.valueWithoutPlan | currency : 'R$' }}</span>
+        </div> 
+    </div>
+
+    <div *ngIf="!hasTax">
+        <span style="color: darkred; font-weight: 600;">Não existe cobertura para essa chamada.</span>
+    </div> 
+</div>
